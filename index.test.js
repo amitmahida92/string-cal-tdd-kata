@@ -43,10 +43,14 @@ test("should check if add('1\\n2,3') returns 6", () => {
   expect(add("1\n2,3")).toBe(6);
 });
 
-test("should check if provided delimiter returns correct output as '//;\\n1;2' return 3", () => {
+test("should check if provided delimiter returns correct output as '//;\\n1;2' returns 3", () => {
   expect(add("//;\n1;2")).toBe(3);
 });
 
-test("should check if provided delimiter returns correct output as '//,;\\n1;2\n3,4' return 10", () => {
+test("should check if provided delimiter returns correct output as '//,;\\n1;2\n3,4' returns 10", () => {
   expect(add("//,;\n1;2\n3,4")).toBe(10);
+});
+
+test("should throw an exception if any negative number is inputed as add('-1') should throw exception", () => {
+  expect(add("-1")).toBe(10);
 });
