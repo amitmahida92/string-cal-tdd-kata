@@ -4,7 +4,11 @@ const add = (stringValue) => {
   }
   if (stringValue.includes(",")) {
     const numbers = stringValue.split(",");
-    return parseInt(numbers[0]) + parseInt(numbers[1]);
+    let total = 0;
+    for (const number of numbers) {
+      total += parseInt(number);
+    }
+    return total;
   }
   return parseInt(stringValue);
 };
