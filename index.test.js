@@ -3,8 +3,8 @@ const add = (stringValue) => {
     return 0;
   }
   if (stringValue.includes(",")) {
-    const delimiter = /[,\n]+/;
-    const numbers = stringValue.split(delimiter);
+    const delimiters = /[,\n]+/;
+    const numbers = stringValue.split(delimiters);
     let total = 0;
     for (const number of numbers) {
       total += parseInt(number);
