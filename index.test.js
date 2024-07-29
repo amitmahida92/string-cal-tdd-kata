@@ -33,3 +33,7 @@ test("should check if add('1,5,6,2,1') returns 15", () => {
 test("should check if add('1\\n2,3') returns 6", () => {
   expect(add("1\n2,3")).toBe(6);
 });
+
+test("should check if provided delimiter returns correct output as '//;\\n1;2' return 3", () => {
+  expect(add("//;\n1;2")).toBe(3);
+});
