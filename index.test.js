@@ -10,7 +10,7 @@ const add = (stringValue) => {
 };
 
 test("should check if add('') returns 0", () => {
-  expect(add("0")).toBe(0);
+  expect(add("")).toBe(0);
 });
 
 test("should check if add('1') returns 1", () => {
