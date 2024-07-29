@@ -9,6 +9,10 @@ const add = (stringValue) => {
   return parseInt(stringValue);
 };
 
+test("should check if add('') returns 0", () => {
+  expect(add("0")).toBe(0);
+});
+
 test("should check if add('1') returns 1", () => {
   expect(add("1")).toBe(1);
 });
