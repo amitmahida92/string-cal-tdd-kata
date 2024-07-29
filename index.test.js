@@ -2,12 +2,21 @@ const add = (stringValue) => {
   if (stringValue === "") {
     return 0;
   }
-  if (stringValue.includes(",")) {
-    const delimiters = /[,\n]+/;
+  let delimiters = /[,\n]+/;
+
+  const regexToMatchDelimiter = /\/\/(.*?)\n/;
+  const match = stringValue.match(regexToMatchDelimiter);
+
+  if (match) {
+    delimiters = new RegExp(`[${match[1]}\n]+`);
+  }
+
+  if (stringValue.match(delimiters)) {
     const numbers = stringValue.split(delimiters);
+    // console.log(`numbers: ${JSON.stringify(numbers)}`);
     let total = 0;
     for (const number of numbers) {
-      total += parseInt(number);
+      total += number && !isNaN(number) ? parseInt(number) : 0;
     }
     return total;
   }
@@ -36,4 +45,8 @@ test("should check if add('1\\n2,3') returns 6", () => {
 
 test("should check if provided delimiter returns correct output as '//;\\n1;2' return 3", () => {
   expect(add("//;\n1;2")).toBe(3);
+});
+
+test("should check if provided delimiter returns correct output as '//,;\\n1;2\n3,4' return 10", () => {
+  expect(add("//,;\n1;2\n3,4")).toBe(10);
 });
