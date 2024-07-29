@@ -13,6 +13,6 @@ test("should check if add('1') returns 1", () => {
   expect(add("1")).toBe(1);
 });
 
-test("should check if add('1,2') returns 3", () => {
-  expect(add("1,2")).toBe(3);
+test("should check if add('1,5') returns 6", () => {
+  expect(add("1,5")).toBe(6);
 });
