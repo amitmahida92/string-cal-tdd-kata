@@ -20,3 +20,7 @@ test("should check if add('1') returns 1", () => {
 test("should check if add('1,5') returns 6", () => {
   expect(add("1,5")).toBe(6);
 });
+
+test("should check if add('1,5,6,2,1') returns 15", () => {
+  expect(add("1,5,6,2,1")).toBe(15);
+});
