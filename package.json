@@ -1,0 +1,25 @@
+{
+  "name": "string-cal-tdd-kata",
+  "version": "1.0.0",
+  "description": "playing around with string calculator tdd kata",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx jest index.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amitmahida92/string-cal-tdd-kata.git"
+  },
+  "keywords": [
+    "string",
+    "calculator",
+    "tdd",
+    "kata"
+  ],
+  "author": "Amit M",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/amitmahida92/string-cal-tdd-kata/issues"
+  },
+  "homepage": "https://github.com/amitmahida92/string-cal-tdd-kata#readme"
+}
