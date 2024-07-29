@@ -3,7 +3,8 @@ const add = (stringValue) => {
     return 0;
   }
   if (stringValue.includes(",")) {
-    const numbers = stringValue.split(",");
+    const delimiter = /[,\n]+/;
+    const numbers = stringValue.split(delimiter);
     let total = 0;
     for (const number of numbers) {
       total += parseInt(number);
@@ -29,6 +30,6 @@ test("should check if add('1,5,6,2,1') returns 15", () => {
   expect(add("1,5,6,2,1")).toBe(15);
 });
 
-test("should check if add('1\n2,3') returns 6", () => {
-  expect(add("1\n2,3")).toBe(15);
+test("should check if add('1\\n2,3') returns 6", () => {
+  expect(add("1\n2,3")).toBe(6);
 });
