@@ -102,5 +102,13 @@ describe("Additional tests", () => {
   test("should perform addition with delimiters of any length", () => {
     expect(add("//***\n1***2***3")).toBe(6);
   });
-  
+
+  test("should perform addition with multiple delimiters as //*%\n1*2%3", () => {
+    expect(add("//*%\n1*2%3")).toBe(6);
+  });
+
+  test("should perform addition with multiple delimiters in comination with any length as //*%%\n1*2%%3", () => {
+    expect(add("//*%%\n1*2%%3")).toBe(6);
+  });
+
 });
