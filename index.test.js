@@ -2,8 +2,8 @@ const add = (stringValue) => {
   if (stringValue === "") {
     return 0;
   }
-  let delimiters = /[,\n]+/;
 
+  let delimiters = /[,\n]+/;
   const regexToMatchDelimiter = /\/\/(.*?)\n/;
   const match = stringValue.match(regexToMatchDelimiter);
 
@@ -11,16 +11,26 @@ const add = (stringValue) => {
     delimiters = new RegExp(`[${match[1]}\n]+`);
   }
 
+  let total = 0;
+  let negativeNumbers = '';
+
   if (stringValue.match(delimiters)) {
     const numbers = stringValue.split(delimiters);
-    // console.log(`numbers: ${JSON.stringify(numbers)}`);
-    let total = 0;
+    console.log("numbers", numbers);
     for (const number of numbers) {
-      total += number && !isNaN(number) ? parseInt(number) : 0;
+      if (number != "" && !isNaN(number)) {
+        if (parseInt(number) >= 0) {
+          total += parseInt(number);
+        } else {
+          negativeNumbers += `${number} `;
+        }
+      }
     }
-    return total;
   }
-  return parseInt(stringValue);
+  if (negativeNumbers?.length || parseInt(stringValue) < 0) {
+    throw new Error(`negative numbers not allowed ${negativeNumbers || stringValue}`);
+  }
+  return total || parseInt(stringValue);
 };
 
 test("should check if add('') returns 0", () => {
@@ -52,5 +62,5 @@ test("should check if provided delimiter returns correct output as '//,;\\n1;2\n
 });
 
 test("should throw an exception if any negative number is inputed as add('-1') should throw exception", () => {
-  expect(add("-1")).toBe(10);
+  expect(() => add("-1")).toThrow("negative numbers not allowed -1");
 });
