@@ -22,7 +22,7 @@ const add = (stringValue) => {
         if (parseInt(number) >= 0) {
           total += parseInt(number);
         } else {
-          negativeNumbers += `${number} `;
+          negativeNumbers += `${number}`;
         }
       }
     }
@@ -61,6 +61,10 @@ test("should check if provided delimiter returns correct output as '//,;\\n1;2\n
   expect(add("//,;\n1;2\n3,4")).toBe(10);
 });
 
-test("should throw an exception if any negative number is inputed as add('-1') should throw exception", () => {
+test("should throw an exception if a negative number is inputed as add('-1')", () => {
   expect(() => add("-1")).toThrow("negative numbers not allowed -1");
+});
+
+test("should throw an exception if more than one negative number is inputed as add('-1, -2, -3') without delimiter", () => {
+  expect(() => add("-1, -2, -3")).toThrow("negative numbers not allowed -1 -2 -3");
 });
