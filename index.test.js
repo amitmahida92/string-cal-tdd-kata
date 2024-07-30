@@ -12,7 +12,7 @@ const add = (stringValue) => {
   }
 
   let total = 0;
-  let negativeNumbers = '';
+  let negativeNumbers = "";
 
   if (stringValue.match(delimiters)) {
     const numbers = stringValue.split(delimiters);
@@ -34,47 +34,62 @@ const add = (stringValue) => {
   return total || parseInt(stringValue);
 };
 
-test("should check if add('') returns 0", () => {
-  expect(add("")).toBe(0);
+describe("Basic tests just with comma(,) as a delimiter & without specific delimiter in string", () => {
+  test("should check if add('') returns 0", () => {
+    expect(add("")).toBe(0);
+  });
+
+  test("should check if add('1') returns 1", () => {
+    expect(add("1")).toBe(1);
+  });
+
+  test("should check if add('1,5') returns 6", () => {
+    expect(add("1,5")).toBe(6);
+  });
+
+  test("should check if add('1,5,6,2,1') returns 15", () => {
+    expect(add("1,5,6,2,1")).toBe(15);
+  });
 });
 
-test("should check if add('1') returns 1", () => {
-  expect(add("1")).toBe(1);
+describe('Intermediate tests with comma and line break(\n) as a delimiter ', () => {
+  test("should check if add('1\\n2,3') returns 6", () => {
+    expect(add("1\n2,3")).toBe(6);
+  });
+
+  test("should check if add('\n5,5\\n5,5') returns 20", () => {
+    expect(add("\n5,5\n5,5")).toBe(20);
+  });  
 });
 
-test("should check if add('1,5') returns 6", () => {
-  expect(add("1,5")).toBe(6);
+describe('Advance tests with specific delimiters provided in string', () => {
+  test("should check if provided delimiter returns correct output as '//;\\n1;2' returns 3", () => {
+    expect(add("//;\n1;2")).toBe(3);
+  });
+  
+  test("should check if provided delimiter returns correct output as '//,;\\n1;2\n3,4' returns 10", () => {
+    expect(add("//,;\n1;2\n3,4")).toBe(10);
+  });  
 });
 
-test("should check if add('1,5,6,2,1') returns 15", () => {
-  expect(add("1,5,6,2,1")).toBe(15);
-});
+describe('Advance tests with negative values, multiple delimiters & exception being thrown', () => {
+  test("should throw an exception if a negative number is inputed as add('-1')", () => {
+    expect(() => add("-1")).toThrow("negative numbers not allowed -1");
+  });
+  
+  test("should throw an exception if more than one negative number is inputed as add('-1,-2,-3') without delimiter", () => {
+    expect(() => add("-1,-2,-3")).toThrow(
+      "negative numbers not allowed -1, -2, -3"
+    );
+  });
+  
+  test("should throw an exception if more than one negative number is inputed as add('//;\n-1;-2;-3') with delimiter", () => {
+    expect(() => add("//;\n-1;-2;-3")).toThrow(
+      "negative numbers not allowed -1, -2, -3"
+    );
+  });  
 
-test("should check if add('1\\n2,3') returns 6", () => {
-  expect(add("1\n2,3")).toBe(6);
-});
-
-test("should check if provided delimiter returns correct output as '//;\\n1;2' returns 3", () => {
-  expect(add("//;\n1;2")).toBe(3);
-});
-
-test("should check if provided delimiter returns correct output as '//,;\\n1;2\n3,4' returns 10", () => {
-  expect(add("//,;\n1;2\n3,4")).toBe(10);
-});
-
-test("should throw an exception if a negative number is inputed as add('-1')", () => {
-  expect(() => add("-1")).toThrow("negative numbers not allowed -1");
-});
-
-test("should throw an exception if more than one negative number is inputed as add('-1,-2,-3') without delimiter", () => {
-  expect(() => add("-1,-2,-3")).toThrow("negative numbers not allowed -1, -2, -3");
-});
-
-test("should throw an exception if more than one negative number is inputed as add('//;\n-1;-2;-3') with delimiter", () => {
-  expect(() => add("//;\n-1;-2;-3")).toThrow("negative numbers not allowed -1, -2, -3");
-});
-
-test("should throw an exception if more than one negative number is inputed as add('//-\n-1--2--3') with delimiter", () => {
-  // expect(() => add("//-\n-1--2--3")).toThrow("negative numbers not allowed -1, -2, -3");
-  expect(add("//-\n-1--2--3")).toBe(6));
+  test("should check if using hyphen(-) as a delimiter returns correct output as add('//-\\n-1--2--3')", () => {
+    expect(add("//-\n-1--2--3")).toBe(6);
+  });
 });
