@@ -19,9 +19,9 @@ const add = (stringValue) => {
     console.log("numbers", numbers);
     for (const number of numbers) {
       if (number != "" && !isNaN(number)) {
-        if (parseInt(number) >= 0) {
+        if (parseInt(number) >= 0 && parseInt(number) <= 1000) {
           total += parseInt(number);
-        } else {
+        } else if (parseInt(number) < 0) {
           negativeNumbers += `${number}, `;
         }
       }
@@ -52,44 +52,55 @@ describe("Basic tests just with comma(,) as a delimiter & without specific delim
   });
 });
 
-describe('Intermediate tests with comma and line break(\n) as a delimiter ', () => {
+describe("Intermediate tests with comma and line break(\n) as a delimiter ", () => {
   test("should check if add('1\\n2,3') returns 6", () => {
     expect(add("1\n2,3")).toBe(6);
   });
 
   test("should check if add('\n5,5\\n5,5') returns 20", () => {
     expect(add("\n5,5\n5,5")).toBe(20);
-  });  
+  });
 });
 
-describe('Advance tests with specific delimiters provided in string', () => {
+describe("Advance tests with specific delimiters provided in string", () => {
   test("should check if provided delimiter returns correct output as '//;\\n1;2' returns 3", () => {
     expect(add("//;\n1;2")).toBe(3);
   });
-  
+
   test("should check if provided delimiter returns correct output as '//,;\\n1;2\n3,4' returns 10", () => {
     expect(add("//,;\n1;2\n3,4")).toBe(10);
-  });  
+  });
 });
 
-describe('Advance tests with negative values, multiple delimiters & exception being thrown', () => {
+describe("Advance tests with negative values, multiple delimiters & exception being thrown", () => {
   test("should throw an exception if a negative number is inputed as add('-1')", () => {
     expect(() => add("-1")).toThrow("negative numbers not allowed -1");
   });
-  
+
   test("should throw an exception if more than one negative number is inputed as add('-1,-2,-3') without delimiter", () => {
     expect(() => add("-1,-2,-3")).toThrow(
       "negative numbers not allowed -1, -2, -3"
     );
   });
-  
+
   test("should throw an exception if more than one negative number is inputed as add('//;\n-1;-2;-3') with delimiter", () => {
     expect(() => add("//;\n-1;-2;-3")).toThrow(
       "negative numbers not allowed -1, -2, -3"
     );
-  });  
+  });
 
   test("should check if using hyphen(-) as a delimiter returns correct output as add('//-\\n-1--2--3')", () => {
     expect(add("//-\n-1--2--3")).toBe(6);
   });
+});
+
+describe("Additional tests", () => {
+  test("should bypass numbers more than 1000", () => {
+    expect(add("//;\n2;1001")).toBe(2);
+  });
+
+  test("should perform addition with delimiters of any length", () => {
+    expect(add("//***\n1***2***3")).toBe(6);
+  });
+  
 });
