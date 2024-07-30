@@ -73,3 +73,8 @@ test("should throw an exception if more than one negative number is inputed as a
 test("should throw an exception if more than one negative number is inputed as add('//;\n-1;-2;-3') with delimiter", () => {
   expect(() => add("//;\n-1;-2;-3")).toThrow("negative numbers not allowed -1, -2, -3");
 });
+
+test("should throw an exception if more than one negative number is inputed as add('//-\n-1--2--3') with delimiter", () => {
+  // expect(() => add("//-\n-1--2--3")).toThrow("negative numbers not allowed -1, -2, -3");
+  expect(add("//-\n-1--2--3")).toBe(6));
+});
