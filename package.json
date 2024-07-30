@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "playing around with string calculator tdd kata",
   "main": "index.js",
+  "module": "es-next",
   "scripts": {
     "test": "npx jest index.test.js"
   },
