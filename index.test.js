@@ -4,6 +4,7 @@ const {
   handleNegativeNumbers,
   handleMultiply,
   isValidNumber,
+  handleArithmetic,
 } = require("./index");
 
 describe("Basic tests just with comma(,) as a delimiter & without specific delimiter in string", () => {
@@ -98,11 +99,11 @@ describe("Test isValidNumber", () => {
   test("should return false if isValidNumber(' ')", () => {
     expect(isValidNumber(" ")).toBeFalsy();
   });
- 
+
   test("should return false if isValidNumber('* 1')", () => {
     expect(isValidNumber("* 1")).toBeFalsy();
   });
-  
+
   test("should return false if isValidNumber('-1')", () => {
     expect(isValidNumber("-1")).toBeFalsy();
   });
@@ -123,29 +124,29 @@ describe("Test exception on negative numbers with handleNegativeNumbers", () => 
 });
 
 describe("Test handleAdd", () => {
-  test("should add given numbers array handleAdd(['', '1'])", () => {
-    expect(handleAdd(["", "1"])).toBe(1);
+  test("should add given numbers array handleArithmetic(['', '1'], '+')", () => {
+    expect(handleArithmetic(["", "1"], "+")).toBe(1);
   });
 
-  test("should add given numbers array handleAdd(['/', '5', '6'])", () => {
-    expect(handleAdd(["/", "5", "6"])).toBe(11);
+  test("should add given numbers array handleArithmetic(['/', '5', '6'], '+')", () => {
+    expect(handleArithmetic(["/", "5", "6"], "+")).toBe(11);
   });
 
-  test("should ignore negative numbers in given numbers array handleAdd(['1', '-5', '6'])", () => {
-    expect(handleAdd(["1", "-5", "6"])).toBe(7);
+  test("should ignore negative numbers in given numbers array handleArithmetic(['1', '-5', '6'], '+')", () => {
+    expect(handleArithmetic(["1", "-5", "6"], "+")).toBe(7);
   });
 });
 
 describe("Test handleMultiply", () => {
-  test("should add given numbers array handleMultiply(['', '1'])", () => {
-    expect(handleMultiply(["", "1"])).toBe(1);
+  test("should add given numbers array handleArithmetic(['', '1'], '*')", () => {
+    expect(handleArithmetic(["", "1"], "*")).toBe(1);
   });
 
-  test("should add given numbers array handleMultiply(['/', '5', '6'])", () => {
-    expect(handleMultiply(["/", "5", "6"])).toBe(30);
+  test("should add given numbers array handleArithmetic(['/', '5', '6'], '*')", () => {
+    expect(handleArithmetic(["/", "5", "6"], "*")).toBe(30);
   });
 
-  test("should ignore negative numbers in given numbers array handleMultiply(['1', '-5', '6'])", () => {
-    expect(handleMultiply(["1", "-5", "6"])).toBe(6);
+  test("should ignore negative numbers in given numbers array handleArithmetic(['1', '-5', '6'], '*')", () => {
+    expect(handleArithmetic(["1", "-5", "6"], "*")).toBe(6);
   });
 });
