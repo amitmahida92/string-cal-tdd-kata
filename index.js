@@ -22,18 +22,19 @@ const handleNegativeNumbers = (numbers) => {
   }
 };
 
-const handleMultiply = (numbers) => {
+const handleArithmetic = (numbers, operation) => {
+  const operators = {
+    "+": function (a, b) {
+      return a + b;
+    },
+    "*": function (a, b) {
+      return a * b;
+    },
+  };
   return numbers
     .filter((n) => isValidNumber(n))
     .map((n) => parseInt(n))
-    .reduce((ac, number) => (ac || 1) * number);
-};
-
-const handleAdd = (numbers) => {
-  return numbers
-    .filter((n) => isValidNumber(n))
-    .map((n) => parseInt(n))
-    .reduce((ac, number) => (ac || 0) + number);
+    .reduce((ac, number) => operators[operation](ac, number));
 };
 
 const add = (stringValue) => {
@@ -59,21 +60,20 @@ const add = (stringValue) => {
     // delimiter exists
     if (match?.[1]?.split("")?.filter((char) => char === "*")?.length === 1) {
       console.log("multiply numbers");
-      return handleMultiply(numbers);
+      return handleArithmetic(numbers, "*");
     } else {
       console.log("add numbers");
-      return handleAdd(numbers);
+      return handleArithmetic(numbers, "+");
     }
   }
-  
+
   // no delimiter
   return isValidNumber(numbers[0]) ? parseInt(numbers[0]) : 0;
 };
 
 module.exports = {
   add,
-  handleMultiply,
+  handleArithmetic,
   handleNegativeNumbers,
-  handleAdd,
   isValidNumber,
 };
