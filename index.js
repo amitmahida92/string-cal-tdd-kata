@@ -1,3 +1,4 @@
+// this function will check if number is valid
 const isValidNumber = (number) => {
   return (
     !isNaN(number.trim()) &&
@@ -6,7 +7,7 @@ const isValidNumber = (number) => {
   );
 };
 
-// this function will handle negative numbers
+// this function will throw exception on negative numbers
 const handleNegativeNumbers = (numbers) => {
   const negativeNumbers = numbers.filter(
     (number) => !isNaN(number) && parseInt(number) < 0
@@ -22,15 +23,17 @@ const handleNegativeNumbers = (numbers) => {
 };
 
 const handleMultiply = (numbers) => {
-  return numbers.reduce((ac, number) =>
-    isValidNumber(number) ? parseInt(ac || 1) * parseInt(number) : parseInt(ac || 1)
-  );
+  return numbers
+    .filter((n) => isValidNumber(n))
+    .map((n) => parseInt(n))
+    .reduce((ac, number) => (ac || 1) * number);
 };
 
 const handleAdd = (numbers) => {
-  return numbers.reduce((ac, number) =>
-    isValidNumber(number) ? parseInt(ac || 0) + parseInt(number) : parseInt(ac || 0)
-  );
+  return numbers
+    .filter((n) => isValidNumber(n))
+    .map((n) => parseInt(n))
+    .reduce((ac, number) => (ac || 0) + number);
 };
 
 const add = (stringValue) => {
@@ -52,14 +55,7 @@ const add = (stringValue) => {
 
   handleNegativeNumbers(numbers);
 
-  if (numbers.length === 1) {
-    // no delimiter
-    if (!isNaN(numbers[0]) && parseInt(numbers[0]) < 0) {
-      throw new Error(`negative numbers not allowed ${numbers[0]}`);
-    }
-
-    return !isNaN(numbers[0]) ? parseInt(numbers[0]) : 0;
-  } else if (numbers.length > 1) {
+  if (numbers.length > 1) {
     // delimiter exists
     if (match?.[1]?.split("")?.filter((char) => char === "*")?.length === 1) {
       console.log("multiply numbers");
@@ -69,6 +65,9 @@ const add = (stringValue) => {
       return handleAdd(numbers);
     }
   }
+  
+  // no delimiter
+  return isValidNumber(numbers[0]) ? parseInt(numbers[0]) : 0;
 };
 
 module.exports = {
@@ -76,4 +75,5 @@ module.exports = {
   handleMultiply,
   handleNegativeNumbers,
   handleAdd,
+  isValidNumber,
 };

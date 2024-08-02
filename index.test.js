@@ -1,6 +1,12 @@
-const { add, handleAdd, handleNegativeNumbers, handleMultiply } = require("./index");
+const {
+  add,
+  handleAdd,
+  handleNegativeNumbers,
+  handleMultiply,
+  isValidNumber,
+} = require("./index");
 
-xdescribe("Basic tests just with comma(,) as a delimiter & without specific delimiter in string", () => {
+describe("Basic tests just with comma(,) as a delimiter & without specific delimiter in string", () => {
   test("should check if add('') returns 0", () => {
     expect(add("")).toBe(0);
   });
@@ -18,7 +24,7 @@ xdescribe("Basic tests just with comma(,) as a delimiter & without specific deli
   });
 });
 
-xdescribe("Intermediate tests with comma and line break(\n) as a delimiter ", () => {
+describe("Intermediate tests with comma and line break(\n) as a delimiter ", () => {
   test("should check if add('1\\n2,3') returns 6", () => {
     expect(add("1\n2,3")).toBe(6);
   });
@@ -38,7 +44,7 @@ describe("Advance tests with specific delimiters provided in string", () => {
   });
 });
 
-xdescribe("Advance tests with negative values, multiple delimiters & exception being thrown", () => {
+describe("Advance tests with negative values, multiple delimiters & exception being thrown", () => {
   test("should throw an exception if a negative number is inputed as add('-1')", () => {
     expect(() => add("-1")).toThrow("negative numbers not allowed -1");
   });
@@ -60,7 +66,7 @@ xdescribe("Advance tests with negative values, multiple delimiters & exception b
   });
 });
 
-xdescribe("Additional tests", () => {
+describe("Additional tests", () => {
   test("should bypass numbers more than 1000", () => {
     expect(add("//;\n2;1001")).toBe(2);
   });
@@ -88,13 +94,31 @@ describe("Test multiplication", () => {
   });
 });
 
-describe("Test handleNegativeNumbers", () => {
+describe("Test isValidNumber", () => {
+  test("should return false if isValidNumber(' ')", () => {
+    expect(isValidNumber(" ")).toBeFalsy();
+  });
+ 
+  test("should return false if isValidNumber('* 1')", () => {
+    expect(isValidNumber("* 1")).toBeFalsy();
+  });
+  
+  test("should return false if isValidNumber('-1')", () => {
+    expect(isValidNumber("-1")).toBeFalsy();
+  });
+
+  test("should return true if isValidNumber(' 1')", () => {
+    expect(isValidNumber(" 1")).toBeTruthy();
+  });
+});
+
+describe("Test exception on negative numbers with handleNegativeNumbers", () => {
   test("should throw if negative numbers in array ['', '//' ,'-1']", () => {
     expect(() => handleNegativeNumbers(["", "-1"])).toThrow();
   });
 
   test("should not throw if only positive numbers in array ['', '//' ,'1']", () => {
-    expect(() => handleNegativeNumbers(['', '//' ,'1'])).not.toThrow();
+    expect(() => handleNegativeNumbers(["", "//", "1"])).not.toThrow();
   });
 });
 
@@ -108,7 +132,7 @@ describe("Test handleAdd", () => {
   });
 
   test("should ignore negative numbers in given numbers array handleAdd(['1', '-5', '6'])", () => {
-    expect(handleAdd(['1', '-5', '6'])).toBe(7);
+    expect(handleAdd(["1", "-5", "6"])).toBe(7);
   });
 });
 
@@ -122,6 +146,6 @@ describe("Test handleMultiply", () => {
   });
 
   test("should ignore negative numbers in given numbers array handleMultiply(['1', '-5', '6'])", () => {
-    expect(handleMultiply(['1', '-5', '6'])).toBe(7);
+    expect(handleMultiply(["1", "-5", "6"])).toBe(6);
   });
 });
